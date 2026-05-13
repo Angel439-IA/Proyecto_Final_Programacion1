@@ -16,6 +16,8 @@ import java.util.ArrayList;
  *
  * @author Angel Sotoy
  */
+
+/*
 public class PagoDB {
 
     //Guardar los pagos en la DB
@@ -59,3 +61,4 @@ public class PagoDB {
         return listaPagos;
     }
 }
+*/

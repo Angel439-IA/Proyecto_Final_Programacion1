@@ -15,6 +15,8 @@ import java.util.ArrayList;
  *
  * @author Angel Sotoy
  */
+
+/*
 public class ConfiguracionCuotaDB {
 
     //Cargar couta actual desde la DB
@@ -54,3 +56,4 @@ public class ConfiguracionCuotaDB {
         }
     }
 }
+*/
