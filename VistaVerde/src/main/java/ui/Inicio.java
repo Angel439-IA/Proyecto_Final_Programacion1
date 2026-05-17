@@ -4,12 +4,18 @@
  */
 package ui;
 
+import java.time.LocalDate;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import model.Propietario;
+import logic.PropietariosDB;
+
 /**
  *
  * @author Angel Sotoy
  */
 public class Inicio extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Inicio.class.getName());
 
     /**
@@ -17,6 +23,47 @@ public class Inicio extends javax.swing.JFrame {
      */
     public Inicio() {
         initComponents();
+
+        // Mostrar fecha actual en el título
+        LocalDate hoy = LocalDate.now();
+        jLabel1.setText("Condominio Vista Verde - " + hoy.getMonth() + " " + hoy.getYear());
+
+        // Cargar propietarios en la tabla
+        cargarPropietariosTabla();
+
+        // Acción para abrir ventana de registro de propietarios
+        jButton1.addActionListener(e -> {
+            Propietarios ventanaRegistro = new Propietarios();
+            ventanaRegistro.setVisible(true);
+        });
+
+        // Acción para cerrar sesión
+        jButton7.addActionListener(e -> {
+            logic.Sesion.getInstancia().cerrarSecio();
+            new Login().setVisible(true);
+            dispose();
+        });
+    }
+
+    public void cargarPropietariosTabla() {
+        // Definir columnas
+        String[] columnas = {"Número Casa", "Propietario", "Teléfono", "Correo"};
+        DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+
+        // Obtener lista de propietarios desde la DB
+        ArrayList<Propietario> lista = PropietariosDB.cargarTodos();
+
+        for (Propietario p : lista) {
+            Object[] fila = {
+                p.getNumeroCasa(),
+                p.getNombreCompleto(),
+                p.getTelefono(),
+                p.getCorreoElectronico()
+            };
+            modelo.addRow(fila);
+        }
+
+        jTable1.setModel(modelo);
     }
 
     /**
@@ -125,30 +172,30 @@ public class Inicio extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+        /**
+         * @param args the command line arguments
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+        public static void main(String args[]) {
+            /* Set the Nimbus look and feel */
+            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+             */
+            try {
+                for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
                 }
+            } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+                logger.log(java.util.logging.Level.SEVERE, null, ex);
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+            //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Inicio().setVisible(true));
-    }
+            /* Create and display the form */
+            java.awt.EventQueue.invokeLater(() -> new Inicio().setVisible(true));
+        }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

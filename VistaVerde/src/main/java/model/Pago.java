@@ -9,5 +9,8 @@ package model;
  * @author Angel Sotoy
  */
 public class Pago {
+
+
+    
     
 }

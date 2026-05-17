@@ -17,39 +17,15 @@ import java.util.ArrayList;
  */
 public class ConfiguracionCuotaDB {
 
-    //Cargar couta actual desde la DB
-    public static ArrayList<Pago> cargarPorCasa(int numeroCasa) {
-        ArrayList<Pago> lista = new ArrayList<>();
-        String sql = "SELECT * FROM pagos WHERE numero_casa=?";
-        try (PreparedStatement ps
-                = ConexionDB.getConxion().prepareStatement(sql)) {
-            ps.setInt(1, numeroCasa);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                lista.add(new Pago(
-                        rs.getInt("mes"),
-                        rs.getInt("anio"),
-                        rs.getDouble("monto")
-                ));
-            }
-        } catch (SQLException e) {
-            System.out.println("Error cargar pagos: " + e.getMessage());
-        }
-        return lista;
-    }
-
-    //Actualizar la couta de DB
+    // Actualizar la cuota en la DB
     public static boolean actualizarCuota(double nuevaCuota) {
-        String sql
-                = "UPDATE configuracion SET cuota_actual=? WHERE id=1";
-        try (PreparedStatement ps
-                = ConexionDB.getConxion().prepareStatement(sql)) {
+        String sql = "UPDATE configuracion SET cuota_actual=? WHERE id=1";
+        try (PreparedStatement ps = ConexionDB.getConxion().prepareStatement(sql)) {
             ps.setDouble(1, nuevaCuota);
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
-            System.out.println("Error actualizar cuota: "
-                    + e.getMessage());
+            System.out.println("Error actualizar cuota: " + e.getMessage());
             return false;
         }
     }

@@ -16,7 +16,7 @@ import java.util.ArrayList;
  *
  * @author Angel Sotoy
  */
-public class PagoDB {
+/*public class PagoDB {
 
     //Guardar los pagos en la DB
     public static boolean GuardarPago(int numeroCasa, Pago pago) {
@@ -50,7 +50,7 @@ public class PagoDB {
                 listaPagos.add(new Pago(
                         rs.getInt("mes"),
                         rs.getInt("anio"),
-                        rs.getDouble("monto")
+                        rs.getInt("monto")
                 ));
             }
         } catch (SQLException e) {
@@ -58,4 +58,4 @@ public class PagoDB {
         }
         return listaPagos;
     }
-}
+}*/

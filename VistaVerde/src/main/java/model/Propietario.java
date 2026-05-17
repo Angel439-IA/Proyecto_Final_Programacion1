@@ -39,7 +39,7 @@ public class Propietario {
     public String getCorreoElectronico() {
         return correoElectronico;
     }
-
+    
     //Setters
     public void setNombreCompleto(String nombreCompleto) {
         this.nombreCompleto = nombreCompleto;
