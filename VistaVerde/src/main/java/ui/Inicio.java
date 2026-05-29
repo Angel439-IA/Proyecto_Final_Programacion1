@@ -65,6 +65,11 @@ public class Inicio extends javax.swing.JFrame {
         jButton4.setText("Estado  de Cuenta por Casa");
 
         jButton5.setText("Reporte General");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
 
         jButton6.setText("Casas Morosas");
 
@@ -124,6 +129,10 @@ public class Inicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+
+    }//GEN-LAST:event_jButton5MouseClicked
 
     /**
      * @param args the command line arguments
