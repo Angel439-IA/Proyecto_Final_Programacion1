@@ -22,6 +22,7 @@ public class ConfiguracionCuota extends javax.swing.JFrame {
 
         setSize(800, 600);
         initComponents();
+        cargarMontoVigente();
         this.setLocationRelativeTo(null);
 
         setIconImage(VistaVerdeIconos.getLogo().getImage());

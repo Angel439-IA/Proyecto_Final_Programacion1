@@ -16,8 +16,19 @@ public class Validaciones {
         return nombre.matches("^[a-zA-ZÁÉÍÓÚáéíóúÑñ ]+$");
     }
     
-    public static boolean validarTelefono(String telefono){
-        return telefono.matches("^[0-9]{7,15}$");
+        public static boolean validarTelefono(String telefono) {
+ 
+        if (!telefono.matches("^\\d{4}-\\d{4}$")) {
+            return false;
+        }
+
+        // Quitar el guion y verificar que no sean todos iguales
+        String soloNumeros = telefono.replace("-", "");
+        char primero = soloNumeros.charAt(0);
+        for (char c : soloNumeros.toCharArray()) {
+            if (c != primero) return true; 
+        }
+        return false; 
     }
     
     public static boolean validarCorreo(String correo){
