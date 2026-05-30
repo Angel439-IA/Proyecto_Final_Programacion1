@@ -108,28 +108,55 @@ public class PropietariosDB {
     }
 
     public static boolean eliminarPorCasa(int idCasa) {
-        String sql = "DELETE FROM propietario WHERE id_casa = ?";
-        try (PreparedStatement ps = ConexionDB.getConxion().prepareStatement(sql)) {
-            ps.setInt(1, idCasa);
-            int filas = ps.executeUpdate();
+        try {
+            java.sql.Connection conn = ConexionDB.getConxion();
 
-            if (filas > 0) {
-                // Marcar la casa como disponible
-                String update = "UPDATE casa SET disponible = 1 WHERE id_casa = ?";
-                try (PreparedStatement ps2 = ConexionDB.getConxion().prepareStatement(update)) {
-                    ps2.setInt(1, idCasa);
-                    ps2.executeUpdate();
+            // Obtener el id_propietario antes de eliminar
+            int idPropietario = -1;
+            String sqlGetId = "SELECT id_propietario FROM propietario WHERE id_casa = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sqlGetId)) {
+                ps.setInt(1, idCasa);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        idPropietario = rs.getInt("id_propietario");
+                    }
                 }
-                return true;
             }
+
+            if (idPropietario == -1) {
+                System.out.println("No se encontró propietario para la casa " + idCasa);
+                return false;
+            }
+
+            
+            String sqlPagos = "DELETE FROM pago WHERE id_propietario = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sqlPagos)) {
+                ps.setInt(1, idPropietario);
+                ps.executeUpdate();
+                System.out.println("Pagos del propietario eliminados.");
+            }
+
+            
+            String sqlProp = "DELETE FROM propietario WHERE id_casa = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sqlProp)) {
+                ps.setInt(1, idCasa);
+                int filas = ps.executeUpdate();
+
+                if (filas > 0) {
+                    //  Marcar casa como disponible
+                    String sqlCasa = "UPDATE casa SET disponible = 1 WHERE id_casa = ?";
+                    try (PreparedStatement ps2 = conn.prepareStatement(sqlCasa)) {
+                        ps2.setInt(1, idCasa);
+                        ps2.executeUpdate();
+                    }
+                    return true;
+                }
+            }
+
         } catch (SQLException e) {
             System.out.println("Error al eliminar propietario: " + e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }
-
-    public static String obtenerCorreoPorCasa(int idCasa) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }

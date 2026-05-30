@@ -40,6 +40,7 @@ public class Registro_de_cuota extends javax.swing.JFrame {
         configurarComboBoxes();
         configurarCamposReadOnly();
         cargarMontoVigente();
+        cargarMontoVigente();
         txtFechaPago.setText(LocalDate.now().toString());
 
         setIconImage(VistaVerdeIconos.getLogo().getImage());
@@ -137,8 +138,6 @@ public class Registro_de_cuota extends javax.swing.JFrame {
 
     private void cargarMontoVigente() {
         montoVigente = ConfiguracionCuotaDB.obtenerMontoVigente();
-        // Si aún no tienes ese método, usa un valor temporal:
-        // montoVigente = 150.00;
         txtMonto.setText(String.format("%.2f", montoVigente));
     }
 
@@ -464,7 +463,7 @@ public class Registro_de_cuota extends javax.swing.JFrame {
             }
 
             int idCasa = Integer.parseInt(jComboBox1.getSelectedItem().toString());
-            int mes = cmbMes.getSelectedIndex() + 1;
+            int mes = Integer.parseInt(cmbMes.getSelectedItem().toString());
             int anio = Integer.parseInt(jComboBox2.getSelectedItem().toString());
             double monto = Double.parseDouble(txtMonto.getText().trim().replace(",", "."));
             int pagoTardio = chkPagoTardio.isSelected() ? 1 : 0;

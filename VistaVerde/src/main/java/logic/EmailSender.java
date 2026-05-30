@@ -25,7 +25,7 @@ import javax.mail.internet.MimeMultipart;
  */
 public class EmailSender {
 
-      public static void enviarCorreo(String destinatario, String asunto, String cuerpoHtml)
+    public static void enviarCorreo(String destinatario, String asunto, String cuerpoHtml)
             throws UnsupportedEncodingException, MessagingException, IOException {
         final String remitente = "angelemanuelpelico@gmail.com";
         final String clave = "igyg wrcg amhj mozj";
@@ -43,7 +43,7 @@ public class EmailSender {
             }
         });
 
-       // Crear mensaje
+        // Crear mensaje
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(remitente, "Vista Verde Administración"));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
