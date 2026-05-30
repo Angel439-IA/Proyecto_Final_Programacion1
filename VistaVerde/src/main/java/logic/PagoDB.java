@@ -20,6 +20,11 @@ public class PagoDB {
         String sql = "SELECT * FROM pago WHERE id_casa = ? ORDER BY anio DESC, mes DESC";
         try (Connection conn = ConexionDB.getConxion();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+
+    public static ArrayList<Pago> cargarPorCasa(int numeroCasa) {
+        ArrayList<Pago> lista = new ArrayList<>();
+        String sql = "SELECT * FROM pago WHERE id_casa = ? ORDER BY anio DESC, mes DESC";
+        try (Connection conn = ConexionDB.getConxion(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, numeroCasa);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -40,20 +45,36 @@ public class PagoDB {
         }
         return lista;
     }
+            check.setInt(1, pago.getIdCasa());
+            check.setInt(2, pago.getMes());
+            check.setInt(3, pago.getAnio());
+            try (ResultSet rs = check.executeQuery()) {
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
   public static boolean GuardarPago(Pago pago) {
 
         String checkSql = "SELECT COUNT(*) FROM pago WHERE id_casa=? AND mes=? AND anio=?";
         try (Connection conn = ConexionDB.getConxion();
              PreparedStatement check = conn.prepareStatement(checkSql)) {
-            check.setInt(1, pago.getIdCasa());
-            check.setInt(2, pago.getMes());
-            check.setInt(3, pago.getAnio());
-            try (ResultSet rs = check.executeQuery()) {
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
                 if (rs.next() && rs.getInt(1) > 0) return false; // duplicate
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+        }
+            if (rs.next()) {
+                monto = rs.getDouble("monto");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener la cuota vigente: " + e.getMessage());
         }
         
          String sql = "INSERT INTO pago (id_casa, id_propietario, mes, anio, " +
@@ -69,67 +90,6 @@ public class PagoDB {
             ps.setString(6, pago.getFechaPago());
             ps.setInt(7,    pago.getIdCuota());
             ps.setInt(8,    pago.getPagoTardio());
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-      public static int obtenerPropietarioPorCasa(int idCasa) {
-        String sql = "SELECT id_propietario FROM propietario WHERE id_casa = ? LIMIT 1";
-        try (Connection conn = ConexionDB.getConxion();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, idCasa);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) return rs.getInt("id_propietario");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 1;
-    }
-
-   public static double getMontoMantenimientoVigente() {
-        double monto = 0.0;
-        // Consultamos la tabla 'cuota' obteniendo el último registro ingresado
-        String sql = "SELECT monto FROM cuota ORDER BY id_cuota DESC LIMIT 1";
-        
-        try (Connection conn = ConexionDB.getConxion();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            
-            if (rs.next()) {
-                monto = rs.getDouble("monto");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al obtener la cuota vigente: " + e.getMessage());
-        }
-        
-        return monto;
-    }
-
-   public static String obtenerNombrePropietarioPorCasa(int idCasa) {
-    String nombreCompleto = "Sin propietario registrado";
-    String sql = "SELECT nombre, apellido FROM propietario WHERE id_casa = ? LIMIT 1";
-    
-    try (Connection conn = ConexionDB.getConxion();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
-        
-        ps.setInt(1, idCasa);
-        try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                String nombre = rs.getString("nombre");
-                String apellido = rs.getString("apellido");
-                
-                // Concatenamos nombre y apellido (manejando si el apellido es nulo)
-                nombreCompleto = nombre + " " + (apellido != null ? apellido : "");
-            }
-        }
-    } catch (SQLException e) {
-        System.out.println("Error al obtener nombre del propietario: " + e.getMessage());
-    }
-    
-    return nombreCompleto.trim();
 }
     
     

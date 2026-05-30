@@ -15,42 +15,47 @@ import java.util.ArrayList;
  *
  * @author Angel Sotoy
  */
+
+/*
 public class ConfiguracionCuotaDB {
 
-    //Cargar couta actual desde la DB
-    public static ArrayList<Pago> cargarPorCasa(int numeroCasa) {
-        ArrayList<Pago> lista = new ArrayList<>();
-        String sql = "SELECT * FROM pagos WHERE numero_casa=?";
-        try (PreparedStatement ps
-                = ConexionDB.getConxion().prepareStatement(sql)) {
-            ps.setInt(1, numeroCasa);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                lista.add(new Pago(
-                        rs.getInt("mes"),
-                        rs.getInt("anio"),
-                        rs.getDouble("monto")
-                ));
-            }
-        } catch (SQLException e) {
-            System.out.println("Error cargar pagos: " + e.getMessage());
-        }
-        return lista;
-    }
-
-    //Actualizar la couta de DB
+    // Actualizar la cuota en la DB
     public static boolean actualizarCuota(double nuevaCuota) {
-        String sql
-                = "UPDATE configuracion SET cuota_actual=? WHERE id=1";
-        try (PreparedStatement ps
-                = ConexionDB.getConxion().prepareStatement(sql)) {
+        String sql = "UPDATE configuracion SET cuota_actual=? WHERE id=1";
+        try (PreparedStatement ps = ConexionDB.getConxion().prepareStatement(sql)) {
             ps.setDouble(1, nuevaCuota);
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
-            System.out.println("Error actualizar cuota: "
-                    + e.getMessage());
+            System.out.println("Error actualizar cuota: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // Obtener el monto vigente de la BD
+    public static double obtenerMontoVigente() {
+        String sql = "SELECT cuota_actual FROM configuracion WHERE id=1";
+        try (Statement st = ConexionDB.getConxion().createStatement(); ResultSet rs = st.executeQuery(sql)) {
+            if (rs.next()) {
+                return rs.getDouble("cuota_actual");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error obtener monto: " + e.getMessage());
+        }
+        return 0.0;
+    }
+
+    // Actualizar solo el monto — SIN dia_limite NI descripcion
+    public static boolean nuevaCuota(double monto) {
+        String sql = "UPDATE configuracion SET cuota_actual=? WHERE id=1";
+        try (PreparedStatement ps = ConexionDB.getConxion().prepareStatement(sql)) {
+            ps.setDouble(1, monto);
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error nueva cuota: " + e.getMessage());
             return false;
         }
     }
 }
+*/
