@@ -4,7 +4,7 @@
  */
 package ui;
 
-import iconos.VistaVerdeIconos;
+import com.vistaverde.vistaverde.VistaVerdeIconos;
 import java.time.LocalDate;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
@@ -179,9 +179,33 @@ public class Inicio extends javax.swing.JFrame {
 
         // Acción para abrir ventana de registro de propietarios
         jButton1.addActionListener(e -> {
-            Propietarios ventanaRegistro = new Propietarios(this); // ← pasar "this"
+            Propietarios ventanaRegistro = new Propietarios(this); // 
             ventanaRegistro.setVisible(true);
             this.setVisible(false); // ocultar Inicio mientras registra
+        });
+
+        jButton2.addActionListener(e -> {
+            Registro_de_cuota ventanaCuota = new Registro_de_cuota();
+            ventanaCuota.setVisible(true);
+            this.setVisible(false);
+        });
+
+        jButton3.addActionListener(e -> {
+            ConfiguracionCuota ventanaConfiguracion = new ConfiguracionCuota();
+            ventanaConfiguracion.setVisible(true);
+            this.setVisible(false);
+        });
+
+        jButton4.addActionListener(e -> {
+            EstadoDeCuenta ventanaEstado = new EstadoDeCuenta();
+            ventanaEstado.setVisible(true);
+            dispose();
+        });
+
+        jButton6.addActionListener(e -> {
+            CasasMorosas ventanaCasas = new CasasMorosas();
+            ventanaCasas.setVisible(true);
+            this.setVisible(false);
         });
 
         // Acción para cerrar sesión
@@ -221,11 +245,11 @@ public class Inicio extends javax.swing.JFrame {
             javax.swing.JOptionPane.showOptionDialog(
                     this,
                     "Ya puede editar el propietario.\nLas celdas están habilitadas para edición.",
-                    "Celdas habilitadas", 
+                    "Celdas habilitadas",
                     javax.swing.JOptionPane.DEFAULT_OPTION,
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE, 
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE,
                     null,
-                    new Object[]{"Cerrar"}, 
+                    new Object[]{"Cerrar"},
                     "Cerrar"
             );
         });
@@ -262,7 +286,7 @@ public class Inicio extends javax.swing.JFrame {
                             javax.swing.JOptionPane.DEFAULT_OPTION,
                             javax.swing.JOptionPane.PLAIN_MESSAGE,
                             iconoExito,
-                            new Object[]{"Cerrar"}, 
+                            new Object[]{"Cerrar"},
                             "Cerrar"
                     );
                     cargarPropietariosTabla();
@@ -303,7 +327,7 @@ public class Inicio extends javax.swing.JFrame {
                         javax.swing.JOptionPane.DEFAULT_OPTION,
                         javax.swing.JOptionPane.PLAIN_MESSAGE,
                         iconoExito,
-                        new Object[]{"Cerrar"}, 
+                        new Object[]{"Cerrar"},
                         "Cerrar"
                 );
             } else {
@@ -403,6 +427,11 @@ public class Inicio extends javax.swing.JFrame {
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 2, 24)); // NOI18N
         jButton5.setText("Reporte General");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 2, 24)); // NOI18N
         jButton6.setText("Casas Morosas");
@@ -477,6 +506,10 @@ public class Inicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+
+    }//GEN-LAST:event_jButton5MouseClicked
 
     /**
      * @param args the command line arguments

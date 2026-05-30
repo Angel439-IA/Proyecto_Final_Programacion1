@@ -74,7 +74,7 @@ public class ConexionDB {
                     + "FOREIGN KEY (id_propietario) REFERENCES propietario(id_propietario),"
                     + "FOREIGN KEY (id_cuota) REFERENCES cuota(id_cuota))");
 
-            // 🔎 Views
+            // ? Views
             stmt.execute("CREATE VIEW IF NOT EXISTS v_estado_mes_actual AS "
                     + "SELECT c.id_casa, "
                     + "COALESCE(p.nombre || ' ' || p.apellido, 'Sin propietario') AS propietario, "
