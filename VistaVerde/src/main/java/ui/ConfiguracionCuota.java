@@ -4,51 +4,111 @@
  */
 package ui;
 
+import com.vistaverde.vistaverde.VistaVerdeIconos;
+import logic.ConfiguracionCuotaDB;
+
 /**
  *
  * @author barri
  */
 public class ConfiguracionCuota extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ConfiguracionCuota.class.getName());
 
     /**
      * Creates new form ConfiguracionCuota
      */
     public ConfiguracionCuota() {
-        
-        setSize(800,600);
+
+        setSize(800, 600);
         initComponents();
-        
         this.setLocationRelativeTo(null);
-       
-        mostrarFechaActual();
+
+        setIconImage(VistaVerdeIconos.getLogo().getImage());
+
+        getContentPane().setBackground(new java.awt.Color(224, 253, 177));
+        getRootPane().setBorder(null);
+        jPanel3.setBorder(null);
+        jPanel2.setBorder(null);
+
+        jPanel3.setBackground(new java.awt.Color(224, 253, 177));
+
+        jLabel1.setBorder(null);
+        jLabel3.setBorder(null);
+        jLabel4.setBorder(null);
+
+        getContentPane().setLayout(new java.awt.BorderLayout());
+        getContentPane().add(jPanel3, java.awt.BorderLayout.CENTER);
+
+        jButton3.addActionListener(e -> {
+            new Inicio().setVisible(true);
+            this.dispose();
+        });
+
         cargarMontoVigente(); // Llamamos al método al abrir la ventana
+
+        java.awt.Image imgEscalada = VistaVerdeIconos.getLogo().getImage()
+                .getScaledInstance(45, 45, java.awt.Image.SCALE_SMOOTH);
+        javax.swing.ImageIcon logoChico = new javax.swing.ImageIcon(imgEscalada);
+
+        jLabel2.setIcon(logoChico);
+        jLabel2.setIconTextGap(10);
+        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.ImageIcon Monto = new javax.swing.ImageIcon(
+                VistaVerdeIconos.getMonto().getImage()
+                        .getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH)
+        );
+        jLabel3.setIcon(Monto);
+        jLabel3.setIconTextGap(8);
+        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.ImageIcon Pago = new javax.swing.ImageIcon(
+                VistaVerdeIconos.getNuevoPago().getImage()
+                        .getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH)
+        );
+        jLabel1.setIcon(Pago);
+        jLabel1.setIconTextGap(8);
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.ImageIcon ConfirmarPago = new javax.swing.ImageIcon(
+                VistaVerdeIconos.getConfirmarPago().getImage()
+                        .getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH)
+        );
+        jLabel4.setIcon(ConfirmarPago);
+        jLabel4.setIconTextGap(8);
+        jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLabel4.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.ImageIcon GuarfarPago = new javax.swing.ImageIcon(
+                VistaVerdeIconos.getGuardar().getImage()
+                        .getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH)
+        );
+        jButton1.setIcon(GuarfarPago);
+        jButton1.setIconTextGap(8);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.ImageIcon Regresar = new javax.swing.ImageIcon(
+                VistaVerdeIconos.getRegresar().getImage()
+                        .getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH)
+        );
+        jButton3.setIcon(Regresar);
+        jButton3.setIconTextGap(8);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
     }
 
     //Este metodo mostrara el  monto de la BD
     private void cargarMontoVigente() {
-    double montoActual = logic.ConfiguracionCuotaDB.obtenerMontoVigente();
-        
-    jLabel5.setText(String.format("Q. %.2f", montoActual));
+        double montoActual = logic.ConfiguracionCuotaDB.obtenerMontoVigente();
+
+        jLabel5.setText(String.format("Q. %.2f", montoActual));
     }
-    
-    private void mostrarFechaActual() {
 
-    java.time.LocalDate fechaActual =
-    java.time.LocalDate.now();
-
-    java.time.format.DateTimeFormatter formato =
-    java.time.format.DateTimeFormatter.ofPattern(
-        "EEEE, dd 'de' MMMM 'de' yyyy",
-        new java.util.Locale("es", "ES")
-    );
-
-    jLabel2.setText(fechaActual.format(formato));
-    }
-  
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,9 +142,10 @@ public class ConfiguracionCuota extends javax.swing.JFrame {
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white));
         jPanel2.setToolTipText("");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 102, 51));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 2, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(30, 30, 30));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Configuracio Cuota");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel3.setText("Monto Actual:");
@@ -108,7 +169,7 @@ public class ConfiguracionCuota extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(255, 204, 204));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton3.setText("Cancelar");
+        jButton3.setText("Regresar");
         jButton3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 102, 102), new java.awt.Color(255, 255, 255), new java.awt.Color(255, 102, 102), new java.awt.Color(255, 102, 102))));
 
         jButton1.setBackground(new java.awt.Color(102, 204, 255));
@@ -161,8 +222,8 @@ public class ConfiguracionCuota extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
                 .addGap(52, 52, 52)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -175,7 +236,7 @@ public class ConfiguracionCuota extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(161, Short.MAX_VALUE))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         jLabel3.getAccessibleContext().setAccessibleDescription("");
@@ -185,9 +246,8 @@ public class ConfiguracionCuota extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,16 +261,15 @@ public class ConfiguracionCuota extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(35, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -241,12 +300,7 @@ public class ConfiguracionCuota extends javax.swing.JFrame {
                 return;
             }
 
-            // Guardar en la Base de Datos
-            // Usamos el día límite que ya exista en la BD para no perderlo
-            int diaLimiteActual = logic.ConfiguracionCuotaDB.obtenerDiaLimite();
-
-            boolean exito = logic.ConfiguracionCuotaDB.nuevaCuota(nuevoMonto, diaLimiteActual, "Actualización manual de cuota");
-
+            boolean exito = logic.ConfiguracionCuotaDB.nuevaCuota(nuevoMonto);
             if (exito) {
                 javax.swing.JOptionPane.showMessageDialog(this, "¡La cuota ha sido actualizada correctamente!", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
 

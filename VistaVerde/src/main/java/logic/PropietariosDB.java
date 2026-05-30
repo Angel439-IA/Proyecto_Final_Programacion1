@@ -128,4 +128,8 @@ public class PropietariosDB {
         return false;
     }
 
+    public static String obtenerCorreoPorCasa(int idCasa) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

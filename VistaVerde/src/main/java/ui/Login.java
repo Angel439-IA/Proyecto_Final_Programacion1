@@ -4,7 +4,7 @@
  */
 package ui;
 
-import iconos.VistaVerdeIconos;
+import com.vistaverde.vistaverde.VistaVerdeIconos;
 
 /**
  *

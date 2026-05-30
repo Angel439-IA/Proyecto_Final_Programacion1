@@ -4,7 +4,7 @@
  */
 package ui;
 
-import iconos.VistaVerdeIconos;
+import com.vistaverde.vistaverde.VistaVerdeIconos;
 import model.Propietario;
 import logic.PropietariosDB;
 import logic.Validaciones;
@@ -35,6 +35,15 @@ public class Propietarios extends javax.swing.JFrame {
 
         // Botón Registrar 
         jButton1.setBackground(new java.awt.Color(102, 204, 255));
+
+        jButton2.addActionListener(e -> {
+            if (ventanaInicio != null) {
+                ventanaInicio.setVisible(true);
+            } else {
+                new Inicio().setVisible(true);
+            }
+            dispose();
+        });
 
         // Ajustes de tamaño
         jTextField1.setPreferredSize(new java.awt.Dimension(200, 25));
@@ -123,6 +132,15 @@ public class Propietarios extends javax.swing.JFrame {
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        javax.swing.ImageIcon Regresar = new javax.swing.ImageIcon(
+                VistaVerdeIconos.getRegresar().getImage()
+                        .getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH)
+        );
+        jButton2.setIcon(Regresar);
+        jButton2.setIconTextGap(8);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
+
         jComboBox1.removeAllItems();
 
         for (int i = 1; i <= 30; i++) {
@@ -179,7 +197,7 @@ public class Propietarios extends javax.swing.JFrame {
                         javax.swing.JOptionPane.DEFAULT_OPTION,
                         javax.swing.JOptionPane.PLAIN_MESSAGE,
                         iconoExito,
-                        new Object[]{"Cerrar"}, // texto del botón
+                        new Object[]{"Cerrar"},
                         "Cerrar"
                 );
 
@@ -228,6 +246,7 @@ public class Propietarios extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -262,6 +281,11 @@ public class Propietarios extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 2, 24)); // NOI18N
         jLabel7.setText("Numero de Casa");
 
+        jButton2.setBackground(new java.awt.Color(255, 204, 204));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 2, 24)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(30, 30, 30));
+        jButton2.setText("Cancelar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -288,8 +312,10 @@ public class Propietarios extends javax.swing.JFrame {
                         .addGap(227, 227, 227)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(331, 331, 331)
-                        .addComponent(jButton1)))
+                        .addGap(203, 203, 203)
+                        .addComponent(jButton1)
+                        .addGap(117, 117, 117)
+                        .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -319,9 +345,11 @@ public class Propietarios extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(115, 115, 115))
+                .addGap(76, 76, 76)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
 
         pack();
@@ -363,6 +391,7 @@ public class Propietarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
