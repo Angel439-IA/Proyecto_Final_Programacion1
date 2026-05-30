@@ -74,15 +74,18 @@ public class ConexionDB {
                     + "FOREIGN KEY (id_propietario) REFERENCES propietario(id_propietario),"
                     + "FOREIGN KEY (id_cuota) REFERENCES cuota(id_cuota))");
 
-            // ? Views
-            stmt.execute("CREATE VIEW IF NOT EXISTS v_estado_mes_actual AS "
+            stmt.execute("DROP VIEW IF EXISTS v_estado_mes_actual");
+
+            stmt.execute("CREATE VIEW v_estado_mes_actual AS "
                     + "SELECT c.id_casa, "
                     + "COALESCE(p.nombre || ' ' || p.apellido, 'Sin propietario') AS propietario, "
                     + "p.telefono, p.correo, "
-                    + "CASE WHEN pg.id_pago IS NULL THEN 'Moroso' "
-                    + "     WHEN pg.pago_tardio = 1 THEN 'Pagado tardío' "
-                    + "     ELSE 'Pagado a tiempo' END AS estado_mes_actual, "
-                    + "COALESCE(pg.monto_pagado, 0) AS pagado_mes_actual, "
+                    + "CASE "
+                    + "  WHEN pg.id_pago IS NULL THEN 'Pendiente' "
+                    + "  WHEN pg.pago_tardio = 1 THEN 'Pagado Tardío' "
+                    + "  ELSE 'Pagado a Tiempo' "
+                    + "END AS estado_mes_actual, "
+                    + "COALESCE(pg.monto_pagado, 0.0) AS pagado_mes_actual, "
                     + "COALESCE(pg.fecha_pago, 'Sin pago') AS fecha_pago "
                     + "FROM casa c "
                     + "LEFT JOIN propietario p ON p.id_casa = c.id_casa "
@@ -117,7 +120,9 @@ public class ConexionDB {
                     + "pg.mes, pg.anio, pg.monto_pagado, pg.fecha_pago, "
                     + "CASE WHEN pg.pago_tardio = 1 THEN 'Pagado tardío' ELSE 'Pagado a tiempo' END AS estado "
                     + "FROM casa c "
-                    + "LEFT JOIN propietario p ON p.id_casa = c.id_casa");
+                    + "LEFT JOIN propietario p ON p.id_casa = c.id_casa " 
+                    + "LEFT JOIN pago pg ON pg.id_casa = c.id_casa"
+            );
             System.out.println("Base de datos inicializada correctamente con tablas y views.");
         } catch (SQLException e) {
             System.out.println("Error al inicializar DB: " + e.getMessage());

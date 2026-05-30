@@ -15,47 +15,65 @@ import java.util.ArrayList;
  *
  * @author Angel Sotoy
  */
-
-/*
 public class ConfiguracionCuotaDB {
 
-    // Actualizar la cuota en la DB
-    public static boolean actualizarCuota(double nuevaCuota) {
-        String sql = "UPDATE configuracion SET cuota_actual=? WHERE id=1";
-        try (PreparedStatement ps = ConexionDB.getConxion().prepareStatement(sql)) {
-            ps.setDouble(1, nuevaCuota);
-            ps.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            System.out.println("Error actualizar cuota: " + e.getMessage());
-            return false;
-        }
-    }
-
-    // Obtener el monto vigente de la BD
     public static double obtenerMontoVigente() {
-        String sql = "SELECT cuota_actual FROM configuracion WHERE id=1";
-        try (Statement st = ConexionDB.getConxion().createStatement(); ResultSet rs = st.executeQuery(sql)) {
+        String sql = "SELECT monto FROM cuota ORDER BY id_cuota DESC LIMIT 1";
+        try (Connection conn = ConexionDB.getConxion(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
-                return rs.getDouble("cuota_actual");
+                return rs.getDouble("monto");
             }
         } catch (SQLException e) {
             System.out.println("Error obtener monto: " + e.getMessage());
+            e.printStackTrace();
         }
         return 0.0;
     }
 
-    // Actualizar solo el monto — SIN dia_limite NI descripcion
     public static boolean nuevaCuota(double monto) {
-        String sql = "UPDATE configuracion SET cuota_actual=? WHERE id=1";
-        try (PreparedStatement ps = ConexionDB.getConxion().prepareStatement(sql)) {
+        // Primero obtenemos los valores actuales para no dejar nulos
+        int diaLimite = obtenerDiaLimiteVigente();
+        String fechaVigencia = obtenerFechaVigente();
+
+        // INSERT simple sin funciones de fecha problemáticas
+        String sql = "INSERT INTO cuota (monto, dia_limite, fecha_vigencia, observacion) "
+                + "VALUES (?, ?, ?, ?)";
+        try (Connection conn = ConexionDB.getConxion(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setDouble(1, monto);
-            ps.executeUpdate();
-            return true;
+            ps.setInt(2, diaLimite);
+            ps.setString(3, fechaVigencia); // String "yyyy-MM-dd"
+            ps.setString(4, "Cuota actualizada");
+            int filas = ps.executeUpdate();
+            System.out.println("Filas insertadas: " + filas); // para debug
+            return filas > 0;
         } catch (SQLException e) {
-            System.out.println("Error nueva cuota: " + e.getMessage());
+            // Este mensaje aparecerá en la consola de NetBeans
+            System.out.println("Error al insertar cuota: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("ErrorCode: " + e.getErrorCode());
+            e.printStackTrace();
             return false;
         }
     }
+
+    public static boolean actualizarCuota(double nuevaCuota) {
+        return nuevaCuota(nuevaCuota);
+    }
+
+    private static int obtenerDiaLimiteVigente() {
+        String sql = "SELECT dia_limite FROM cuota ORDER BY id_cuota DESC LIMIT 1";
+        try (Connection conn = ConexionDB.getConxion(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt("dia_limite");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error dia_limite: " + e.getMessage());
+        }
+        return 7;
+    }
+
+    private static String obtenerFechaVigente() {
+        // Devuelve la fecha de hoy en formato SQLite "yyyy-MM-dd"
+        return java.time.LocalDate.now().toString();
+    }
 }
-*/
