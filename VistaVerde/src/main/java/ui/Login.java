@@ -4,6 +4,8 @@
  */
 package ui;
 
+import iconos.VistaVerdeIconos;
+
 /**
  *
  * @author Angel Sotoy
@@ -17,6 +19,58 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        setSize(800, 600);
+        setLocationRelativeTo(null);
+
+        // Fondo general
+        getContentPane().setBackground(new java.awt.Color(224, 253, 177));
+
+        // Botón Ingresar 
+        jButton1.setBackground(new java.awt.Color(102, 204, 255));
+
+        //Icono Ingresar
+        javax.swing.ImageIcon iconoIngresar = new javax.swing.ImageIcon(
+                VistaVerdeIconos.getIngresar().getImage()
+                        .getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH)
+        );
+        jButton1.setIcon(iconoIngresar);
+        jButton1.setIconTextGap(8);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        setIconImage(VistaVerdeIconos.getLogo().getImage());
+
+        // Escalar el logo a tamaño pequeño para ponerlo junto al título
+        java.awt.Image imgEscalada = VistaVerdeIconos.getLogo().getImage()
+                .getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+        javax.swing.ImageIcon logoChico = new javax.swing.ImageIcon(imgEscalada);
+
+        // Logo a la izquierda, texto a la derecha
+        jLabel1.setIcon(logoChico);
+        jLabel1.setIconTextGap(10);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        //Icono Usuario
+        javax.swing.ImageIcon iconoUsuario = new javax.swing.ImageIcon(
+                VistaVerdeIconos.getUsuario().getImage()
+                        .getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH)
+        );
+        jLabel2.setIcon(iconoUsuario);
+        jLabel2.setIconTextGap(8);
+        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        //Icono Contrasena
+        javax.swing.ImageIcon iconoContrasena = new javax.swing.ImageIcon(
+                VistaVerdeIconos.getContrasena().getImage()
+                        .getScaledInstance(25, 25, java.awt.Image.SCALE_SMOOTH)
+        );
+        jLabel3.setIcon(iconoContrasena);
+        jLabel3.setIconTextGap(8);
+        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
     }
 
     /**
@@ -38,11 +92,14 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 2, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Condominio Vista Verde");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 2, 24)); // NOI18N
         jLabel2.setText("Usuario");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 2, 24)); // NOI18N
         jLabel3.setText("Contraseña");
 
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
@@ -50,6 +107,7 @@ public class Login extends javax.swing.JFrame {
         jToggleButton1.setText("👁");
         jToggleButton1.addActionListener(this::jToggleButton1ActionPerformed);
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 2, 24)); // NOI18N
         jButton1.setText("Ingresar");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
@@ -58,43 +116,40 @@ public class Login extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(50, 50, 50)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(154, 154, 154)
-                        .addComponent(jButton1)))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addGap(278, 278, 278)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel3)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(98, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(201, 201, 201))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(88, 88, 88)
                 .addComponent(jLabel1)
-                .addGap(35, 35, 35)
+                .addGap(62, 62, 62)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToggleButton1))
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         pack();
@@ -115,13 +170,13 @@ public class Login extends javax.swing.JFrame {
             inicia.setVisible(true);
             this.dispose();
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this,
+            javax.swing.JOptionPane.showMessageDialog(
+                    this,
                     "Usuario o contraseña incorrectos.",
                     "Error de acceso",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-            jPasswordField1.setText("");
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+            );
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed

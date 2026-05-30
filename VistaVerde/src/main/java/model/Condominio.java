@@ -1,13 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author Angel Sotoy
- */
+import java.util.ArrayList;
+
 public class Condominio {
-    
+    private ArrayList<Casa> casas;
+
+    public Condominio() {
+        casas = new ArrayList<>();
+        for (int i = 1; i <= 30; i++) {
+            casas.add(new Casa(i, "Casa " + i, true));
+        }
+    }
+
+    public ArrayList<Casa> getCasas() { return casas; }
+
+    public Casa buscarCasa(int idCasa) {
+        for (Casa c : casas) {
+            if (c.getIdCasa() == idCasa) return c;
+        }
+        return null;
+    }
 }
