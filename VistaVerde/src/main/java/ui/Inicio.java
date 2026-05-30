@@ -202,6 +202,12 @@ public class Inicio extends javax.swing.JFrame {
             dispose();
         });
 
+        jButton5.addActionListener(e -> {
+            Rep_general ReporteGeneral = new Rep_general();
+            ReporteGeneral.setVisible(true);
+            this.setVisible(false);
+        });
+
         jButton6.addActionListener(e -> {
             CasasMorosas ventanaCasas = new CasasMorosas();
             ventanaCasas.setVisible(true);
@@ -303,13 +309,81 @@ public class Inicio extends javax.swing.JFrame {
 
             DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
             boolean cambios = false;
+            boolean hayErrores = false;
 
             for (int i = 0; i < modelo.getRowCount(); i++) {
                 int idCasa = Integer.parseInt(modelo.getValueAt(i, 0).toString());
-                String nombre = modelo.getValueAt(i, 1).toString();
-                String apellido = modelo.getValueAt(i, 2).toString();
-                String telefono = modelo.getValueAt(i, 3).toString();
-                String correo = modelo.getValueAt(i, 4).toString();
+                String nombre = modelo.getValueAt(i, 1).toString().trim();
+                String apellido = modelo.getValueAt(i, 2).toString().trim();
+                String telefono = modelo.getValueAt(i, 3).toString().trim();
+                String correo = modelo.getValueAt(i, 4).toString().trim();
+
+                // Validar campos vacíos
+                if (nombre.isEmpty() || apellido.isEmpty() || telefono.isEmpty() || correo.isEmpty()) {
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "La casa " + idCasa + " tiene campos vacíos. Todos los campos son obligatorios.",
+                            "Campos vacíos",
+                            javax.swing.JOptionPane.WARNING_MESSAGE);
+                    hayErrores = true;
+                    break;
+                }
+
+                // Validar nombre
+                if (!logic.Validaciones.validarNombre(nombre)) {
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "Casa " + idCasa + ": el nombre \"" + nombre + "\" solo puede tener letras y espacios.",
+                            "Nombre inválido",
+                            javax.swing.JOptionPane.ERROR_MESSAGE);
+                    hayErrores = true;
+                    break;
+                }
+
+                // Validar apellido
+                if (!logic.Validaciones.validarNombre(apellido)) {
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "Casa " + idCasa + ": el apellido \"" + apellido + "\" solo puede tener letras y espacios.",
+                            "Apellido inválido",
+                            javax.swing.JOptionPane.ERROR_MESSAGE);
+                    hayErrores = true;
+                    break;
+                }
+
+                // Validar teléfono: formato XXXX-XXXX, sin todos iguales
+                if (!logic.Validaciones.validarTelefono(telefono)) {
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "Casa " + idCasa + ": el teléfono \"" + telefono + "\" no es válido.\n"
+                            + "Debe tener el formato XXXX-XXXX (ej: 5013-0074).\n"
+                            + "Solo números con un guion en medio.\n"
+                            + "No se permiten los 8 dígitos iguales (ej: 0000-0000).",
+                            "Teléfono inválido",
+                            javax.swing.JOptionPane.ERROR_MESSAGE);
+                    hayErrores = true;
+                    break;
+                }
+
+                // Validar correo
+                if (!logic.Validaciones.validarCorreo(correo)) {
+                    javax.swing.JOptionPane.showMessageDialog(this,
+                            "Casa " + idCasa + ": el correo \"" + correo + "\" no tiene un formato válido.",
+                            "Correo inválido",
+                            javax.swing.JOptionPane.ERROR_MESSAGE);
+                    hayErrores = true;
+                    break;
+                }
+            }
+
+            // Si hubo errores no guardar nada
+            if (hayErrores) {
+                return;
+            }
+
+            // Todo válido → guardar
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                int idCasa = Integer.parseInt(modelo.getValueAt(i, 0).toString());
+                String nombre = modelo.getValueAt(i, 1).toString().trim();
+                String apellido = modelo.getValueAt(i, 2).toString().trim();
+                String telefono = modelo.getValueAt(i, 3).toString().trim();
+                String correo = modelo.getValueAt(i, 4).toString().trim();
 
                 Propietario p = new Propietario(idCasa, nombre, apellido, telefono, correo);
                 if (PropietariosDB.actualizar(p)) {
@@ -319,11 +393,10 @@ public class Inicio extends javax.swing.JFrame {
 
             if (cambios) {
                 javax.swing.ImageIcon iconoExito = VistaVerdeIconos.getExito();
-
                 javax.swing.JOptionPane.showOptionDialog(
                         this,
-                        "Propietario Editado correctamente",
-                        "Edicion Exitoso",
+                        "Propietario editado correctamente",
+                        "Edición Exitosa",
                         javax.swing.JOptionPane.DEFAULT_OPTION,
                         javax.swing.JOptionPane.PLAIN_MESSAGE,
                         iconoExito,
@@ -333,7 +406,8 @@ public class Inicio extends javax.swing.JFrame {
             } else {
                 javax.swing.JOptionPane.showMessageDialog(this, "No se detectaron cambios");
             }
-            cargarPropietariosTabla(); // refrescar tabla
+
+            cargarPropietariosTabla();
         });
 
     }
@@ -432,6 +506,7 @@ public class Inicio extends javax.swing.JFrame {
                 jButton5MouseClicked(evt);
             }
         });
+        jButton5.addActionListener(this::jButton5ActionPerformed);
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 2, 24)); // NOI18N
         jButton6.setText("Casas Morosas");
@@ -510,6 +585,10 @@ public class Inicio extends javax.swing.JFrame {
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
 
     }//GEN-LAST:event_jButton5MouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
