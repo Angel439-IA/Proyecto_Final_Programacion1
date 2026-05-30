@@ -15,6 +15,8 @@ import java.util.ArrayList;
  *
  * @author Angel Sotoy
  */
+
+/*
 public class ConfiguracionCuotaDB {
 
     // Actualizar la cuota en la DB
@@ -56,3 +58,4 @@ public class ConfiguracionCuotaDB {
         }
     }
 }
+*/
