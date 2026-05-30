@@ -6,40 +6,54 @@ package model;
 
 import java.util.ArrayList;
 
-
 public class Casa {
-     public int numero;
-     public int propietario;
-     public ArrayList<Pago> pagos = new ArrayList<>();
 
-    public int getNumero() {
-        return numero;
+    private int idCasa;          // Identificador único de la casa
+    private boolean ocupada;     // true si la casa ya tiene propietario
+    private int idPropietario;   // ID del propietario asignado (0 si no tiene)
+
+    // Constructor vacío
+    public Casa() {
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    // Constructor con parámetros
+    public Casa(int idCasa, boolean ocupada, int idPropietario) {
+        this.idCasa = idCasa;
+        this.ocupada = ocupada;
+        this.idPropietario = idPropietario;
     }
 
-    public int getPropietario() {
-        return propietario;
+    // Getters y Setters
+    public int getIdCasa() {
+        return idCasa;
     }
 
-    public void setPropietario(int propietario) {
-        this.propietario = propietario;
+    public void setIdCasa(int idCasa) {
+        this.idCasa = idCasa;
     }
 
-    public ArrayList<Pago> getPagos() {
-        return pagos;
+    public boolean isOcupada() {
+        return ocupada;
     }
 
-    public void setPagos(ArrayList<Pago> pagos) {
-        this.pagos = pagos;
+    public void setOcupada(boolean ocupada) {
+        this.ocupada = ocupada;
     }
-     
-     
-     
-     
-     
-    
-    
+
+    public int getIdPropietario() {
+        return idPropietario;
+    }
+
+    public void setIdPropietario(int idPropietario) {
+        this.idPropietario = idPropietario;
+    }
+
+    @Override
+    public String toString() {
+        return "Casa{"
+                + "idCasa=" + idCasa
+                + ", ocupada=" + ocupada
+                + ", idPropietario=" + idPropietario
+                + '}';
+    }
 }

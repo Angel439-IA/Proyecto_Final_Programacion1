@@ -32,6 +32,7 @@ public class Registro_de_cuota extends javax.swing.JFrame {
         configurarComboBoxes();
         configurarCamposReadOnly();
         cargarMontoVigente();
+        cargarMontoVigente();
         txtFechaPago.setText(LocalDate.now().toString());
     private void configurarCamposReadOnly() {
         txtIdPropietario1.setEditable(false);

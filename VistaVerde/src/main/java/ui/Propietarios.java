@@ -176,7 +176,12 @@ public class Propietarios extends javax.swing.JFrame {
             }
 
             if (!Validaciones.validarTelefono(telefono)) {
-                javax.swing.JOptionPane.showMessageDialog(this, "El telefono solo debe tener numeros");
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "El teléfono debe tener el formato XXXX-XXXX (ej: 5013-0074)\n"
+                        + "Solo números con un guion en medio.\n"
+                        + "No se permiten los 8 dígitos iguales (ej: 0000-0000).",
+                        "Teléfono inválido",
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
