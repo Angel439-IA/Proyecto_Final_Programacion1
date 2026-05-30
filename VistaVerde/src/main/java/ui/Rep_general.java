@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ui;
+
 import logic.ConexionDB;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -13,12 +14,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
 /**
  *
  * @author cuasl
  */
 public class Rep_general extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Rep_general.class.getName());
 
     /**
@@ -26,112 +28,131 @@ public class Rep_general extends javax.swing.JFrame {
      */
     public Rep_general() {
         initComponents();
-         setSize(800, 600);
-         setLocationRelativeTo(null);
-            cargarImagen(Icon1, "/imagenes/finanzas.png");
-            cargarImagen(Icon2, "/imagenes/Iconovistaverde.png");
-            mostrarPieReporte();
-                  ConexionDB.iniciarDB();
-          mostrar("rep_general");
-          
-          
+        setSize(800, 600);
+        setLocationRelativeTo(null);
+        logic.ConexionDB.iniciarDB();
 
+        cargarImagen(Icon1, "/imagenes/finanzas.png");
+        cargarImagen(Icon2, "/imagenes/Iconovistaverde.png");
+        mostrar("v_estado_mes_actual");
+        mostrarPieReporte();
     }
-    
-public void mostrarPieReporte() {
-    String sqlRecaudado =
-        "SELECT COALESCE(SUM(monto_pagado), 0) AS total_recaudado " +
-        "FROM pago " +
-        "WHERE mes = CAST(strftime('%m', 'now') AS INTEGER) " +
-        "AND anio = CAST(strftime('%Y', 'now') AS INTEGER)";
 
-    String sqlEsperado =
-        "SELECT " +
-        "((SELECT monto FROM cuota ORDER BY fecha_vigencia DESC, id_cuota DESC LIMIT 1) * " +
-        "(SELECT COUNT(*) FROM propietario)) AS total_esperado";
+    public void mostrarPieReporte() {
+        String sqlRecaudado
+                = "SELECT COALESCE(SUM(monto_pagado), 0) AS total_recaudado "
+                + "FROM pago "
+                + "WHERE mes = CAST(strftime('%m', 'now') AS INTEGER) "
+                + "AND anio = CAST(strftime('%Y', 'now') AS INTEGER)";
 
-    try {
-        Connection con = ConexionDB.getConxion();
+        String sqlEsperado
+                = "SELECT "
+                + "((SELECT monto FROM cuota ORDER BY fecha_vigencia DESC, id_cuota DESC LIMIT 1) * "
+                + "(SELECT COUNT(*) FROM propietario)) AS total_esperado";
 
-        double totalRecaudado = 0;
-        double totalEsperado = 0;
+        try {
+            Connection con = ConexionDB.getConxion();
 
-        Statement st1 = con.createStatement();
-        ResultSet rs1 = st1.executeQuery(sqlRecaudado);
+            double totalRecaudado = 0;
+            double totalEsperado = 0;
 
-        if (rs1.next()) {
-            totalRecaudado = rs1.getDouble("total_recaudado");
-        }
+            Statement st1 = con.createStatement();
+            ResultSet rs1 = st1.executeQuery(sqlRecaudado);
 
-        Statement st2 = con.createStatement();
-        ResultSet rs2 = st2.executeQuery(sqlEsperado);
-
-        if (rs2.next()) {
-            totalEsperado = rs2.getDouble("total_esperado");
-        }
-
-        double pendiente = totalEsperado - totalRecaudado;
-
-        lblRecaudadoMes.setText("Total recaudado del mes: Q" + String.format("%.2f", totalRecaudado));
-        lblEsperadoMes.setText("Total esperado del mes: Q" + String.format("%.2f", totalEsperado));
-        lblPendienteMes.setText("Pendiente por recaudar: Q" + String.format("%.2f", pendiente));
-
-        rs1.close();
-        rs2.close();
-        st1.close();
-        st2.close();
-
-    } catch (SQLException e) {
-        System.out.println("Error al mostrar pie del reporte: " + e.getMessage());
-    }
-}
-
-private void cargarImagen(JLabel destino, String ruta) {
-    ImageIcon original = new ImageIcon(getClass().getResource(ruta));
-    Image img = original.getImage().getScaledInstance(
-            destino.getWidth(),
-            destino.getHeight(),
-            Image.SCALE_SMOOTH
-    );
-    destino.setIcon(new ImageIcon(img));
-}
-
-    
-    public void mostrar(String tabla) {
-    String sql = "SELECT * FROM " + tabla;
-
-    try { 
-        Connection con = ConexionDB.getConxion();
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery(sql);
-
-        DefaultTableModel modelo = new DefaultTableModel();
-
-        ResultSetMetaData metaData = rs.getMetaData();
-        int columnas = metaData.getColumnCount();
-
-        for (int i = 1; i <= columnas; i++) {
-            modelo.addColumn(metaData.getColumnName(i));
-        }
-
-        while (rs.next()) {
-            Object[] fila = new Object[columnas];
-
-            for (int i = 0; i < columnas; i++) {
-                fila[i] = rs.getObject(i + 1);
+            if (rs1.next()) {
+                totalRecaudado = rs1.getDouble("total_recaudado");
             }
 
-            modelo.addRow(fila);
+            Statement st2 = con.createStatement();
+            ResultSet rs2 = st2.executeQuery(sqlEsperado);
+
+            if (rs2.next()) {
+                totalEsperado = rs2.getDouble("total_esperado");
+            }
+
+            double pendiente = totalEsperado - totalRecaudado;
+
+            lblRecaudadoMes.setText("Total recaudado del mes: Q" + String.format("%.2f", totalRecaudado));
+            lblEsperadoMes.setText("Total esperado del mes: Q" + String.format("%.2f", totalEsperado));
+            lblPendienteMes.setText("Pendiente por recaudar: Q" + String.format("%.2f", pendiente));
+
+            rs1.close();
+            rs2.close();
+            st1.close();
+            st2.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error al mostrar pie del reporte: " + e.getMessage());
         }
-
-        jTable1.setModel(modelo);
-
-    } catch (SQLException e) {
-        System.out.println("Error al mostrar datos: " + e.getMessage());
     }
-}
-    
-    
+
+    private void cargarImagen(JLabel destino, String ruta) {
+        ImageIcon original = new ImageIcon(getClass().getResource(ruta));
+        Image img = original.getImage().getScaledInstance(
+                destino.getWidth(),
+                destino.getHeight(),
+                Image.SCALE_SMOOTH
+        );
+        destino.setIcon(new ImageIcon(img));
+    }
+
+    public void mostrar(String tabla) {
+        String sql = "SELECT * FROM " + tabla;
+
+        try {
+            java.sql.Connection con = logic.ConexionDB.getConxion();
+            java.sql.Statement st = con.createStatement();
+            java.sql.ResultSet rs = st.executeQuery(sql);
+
+            DefaultTableModel modelo = new DefaultTableModel();
+            java.sql.ResultSetMetaData metaData = rs.getMetaData();
+            int columnas = metaData.getColumnCount();
+
+            // Nombres legibles para v_estado_mes_actual (7 columnas)
+            String[] nombresLegibles = {
+                "N. Casa", "Propietario", "Teléfono", "Correo",
+                "Estado Mes Actual", "Monto Pagado", "Fecha Pago"
+            };
+
+            if (columnas == nombresLegibles.length) {
+                for (String nombre : nombresLegibles) {
+                    modelo.addColumn(nombre);
+                }
+            } else {
+                for (int i = 1; i <= columnas; i++) {
+                    modelo.addColumn(metaData.getColumnName(i));
+                }
+            }
+
+            while (rs.next()) {
+                Object[] fila = new Object[columnas];
+                for (int i = 0; i < columnas; i++) {
+                    fila[i] = rs.getObject(i + 1);
+                }
+                modelo.addRow(fila);
+            }
+
+            jTable1.setModel(modelo);
+
+            // Ajuste de ancho de columnas
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(55);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(150);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(90);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(160);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(110);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(85);
+            jTable1.getColumnModel().getColumn(6).setPreferredWidth(100);
+
+            jTable1.setRowHeight(22);
+
+            rs.close();
+            st.close();
+
+        } catch (java.sql.SQLException e) {
+            System.out.println("Error al mostrar datos: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -308,9 +329,9 @@ private void cargarImagen(JLabel destino, String ruta) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botbackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botbackMouseClicked
-    Inicio e = new Inicio();
-    e.setVisible(true);
-    this.dispose();// TODO add your handling code here:
+        Inicio e = new Inicio();
+        e.setVisible(true);
+        this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_botbackMouseClicked
 
     /**
